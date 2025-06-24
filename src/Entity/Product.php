@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,8 +25,23 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE',nullable: false)]
+    private ?Category $category = null;
+
+    /**
+     * @var Collection<int, OrderItem>
+     */
+    #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'product', orphanRemoval: true)]
+    private Collection $prodoctItems;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    public function __construct()
+    {
+        $this->prodoctItems = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -68,14 +85,57 @@ class Product
         return $this;
     }
 
-    public function getType(): ?string
+
+    public function getCategory(): ?Category
     {
-        return $this->type;
+        return $this->category;
     }
 
-    public function setType(string $type): static
+    public function setCategory(?Category $category): static
     {
-        $this->type = $type;
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderItem>
+     */
+    public function getProdoctItems(): Collection
+    {
+        return $this->prodoctItems;
+    }
+
+    public function addProdoctItem(OrderItem $prodoctItem): static
+    {
+        if (!$this->prodoctItems->contains($prodoctItem)) {
+            $this->prodoctItems->add($prodoctItem);
+            $prodoctItem->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProdoctItem(OrderItem $prodoctItem): static
+    {
+        if ($this->prodoctItems->removeElement($prodoctItem)) {
+            // set the owning side to null (unless already changed)
+            if ($prodoctItem->getProduct() === $this) {
+                $prodoctItem->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }
