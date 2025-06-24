@@ -23,10 +23,6 @@ class Order
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE',nullable: false)]
-    private ?User $user = null;
-
     /**
      * @var Collection<int, OrderItem>
      */
@@ -70,17 +66,6 @@ class Order
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, OrderItem>
