@@ -29,6 +29,10 @@ class Order
     #[ORM\OneToMany(targetEntity: OrderItem::class, mappedBy: 'orderRef', orphanRemoval: true)]
     private Collection $orderItems;
 
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE',nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->orderItems = new ArrayCollection();
@@ -93,6 +97,18 @@ class Order
                 $orderItem->setOrderRef(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
