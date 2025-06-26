@@ -9,10 +9,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
-    #[Route('/', name: 'home', methods: ['GET'])]
+    #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {
-        return $this->render('home/index.html.twig', [
+        return $this->render('¨pages/home/index.html.twig', [
             'products' => $productRepository->findLatestProducts(5)
         ]);
     }

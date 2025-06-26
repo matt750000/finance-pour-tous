@@ -22,7 +22,7 @@ class SecurityController extends AbstractController
             // parameters usually defined in Symfony login forms
             'error' => $error,
             'last_username' => $lastUsername,
-            'page_title' => '<h1>La finance pour tous</h1>',
+            'page_title' => '<h1> Finance pour tous</h1>',
             'target_path' => $this->generateUrl('admin'),
             'csrf_token_intention' => 'authenticate',
         ]);
