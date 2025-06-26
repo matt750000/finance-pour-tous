@@ -134,5 +134,4 @@ class Category
     {
         return (string) $this->getName();
     }
-
 }

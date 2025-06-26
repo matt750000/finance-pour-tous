@@ -13,6 +13,8 @@ class UserFixtures extends Fixture
         $user = new User();
 
         $user->setEmail('admin@example.com');
+        $user->setFirstName('John'); // <-- Obligatoire !
+        $user->setLastName('Doe');
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPassword('$2y$13$d5P.hq3Hs3tHcBD058pHzOK3xRtuTFyqZiqGhnlieaT7L2ahW663u'); // pas encore hashé
         $user->setUpdatedAt(new \DateTimeImmutable());

@@ -174,4 +174,9 @@ class Product
     {
         $this->updatedAt = $updatedAt;
     }
+
+    public function __toString(): string
+    {
+        return (string) $this->getName();
+    }
 }

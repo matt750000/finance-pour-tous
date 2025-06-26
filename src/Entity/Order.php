@@ -30,7 +30,7 @@ class Order
     private Collection $orderItems;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE',nullable: false)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     private ?User $user = null;
 
     public function __construct()
@@ -38,7 +38,7 @@ class Order
         $this->orderItems = new ArrayCollection();
     }
 
-    
+
 
     public function getId(): ?int
     {
@@ -112,5 +112,4 @@ class Order
 
         return $this;
     }
-
 }

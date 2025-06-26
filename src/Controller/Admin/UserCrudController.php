@@ -19,10 +19,13 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield EmailField::new('email', 'Email');
+        yield TextField::new('firstName', 'Prénom');
+        yield TextField::new('lastName', 'Nom de famille');
         yield ArrayField::new('roles', 'Rôles');
         yield DateTimeField::new('updatedAt', 'Mis à jour le');
         yield TextField::new('plainPassword')
-          ->setFormType(\Symfony\Component\Form\Extension\Core\Type\PasswordType::class)
-          ->setHelp('Laissez vide pour conserver le mot de passe actuel');
+            ->setFormType(\Symfony\Component\Form\Extension\Core\Type\PasswordType::class)
+            ->onlyOnForms()
+            ->setHelp('Laissez vide pour conserver le mot de passe actuel');
     }
 }
