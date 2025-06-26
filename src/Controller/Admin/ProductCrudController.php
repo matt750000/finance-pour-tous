@@ -7,7 +7,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -22,6 +25,15 @@ class ProductCrudController extends AbstractCrudController
         yield TextEditorField::new('description', 'Description');
         yield NumberField::new('price', 'Prix');
         yield AssociationField::new('category', 'Catégorie');
-        yield TextField::new('image', 'URL de l\'image');
+
+        yield Field::new('imageFile')
+            ->setFormType(VichImageType::class)
+            ->setLabel('Image')
+            ->onlyOnForms();
+
+        yield ImageField::new('image')
+            ->setBasePath('/images/products')
+            ->setLabel('Image')
+            ->onlyOnIndex();
     }
 }
