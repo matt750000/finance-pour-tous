@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Mon Conseil Financier - Accueil{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="jumbotron">
+            <h1 class="display-4">Bienvenue sur mon site, l'expert en Conseil Financier</h1>
+            <p class="lead">
+                Découvrez des ressources exclusives pour gérer votre argent, investir intelligemment et atteindre vos objectifs financiers.
+            </p>
+            <hr class="my-4">
+            <p>Pour commencer, créez un compte ou connectez-vous :</p>
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-primary btn-lg" href="{{ path('app_register') }}" role="button">Inscription</a>
+                <a class="btn btn-outline-secondary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
+            </div>
+        </div>
+
+        {# SECTION À PROPOS #}
+        <section class="mt-5">
+            <h2>À propos</h2>
+            <p>
+                Nous sommes spécialisés dans le conseil financier. Nous proposons des e-books, des formations, des modèles Excel et un abonnement premium pour accéder à du contenu exclusif.
+            </p>
+        </section>
+
+        {# SECTION PRODUITS #}
+        <section class="mt-5">
+            <h2>Nos Produits</h2>
+
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3">
+                {% for product in products %}
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            {% if product.image %}
+                                <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text text-muted">
+                                    {{ product.description|default('Aucune description')|slice(0, 100) ~ '...' }}
+                                </p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">{{ product.price }} €</span>
+                                <a href="{{ path('app_login') }}" class="btn btn-sm btn-primary">Voir</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col">
+                        <div class="alert alert-info">Aucun produit trouvé.</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

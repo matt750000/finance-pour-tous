@@ -11,7 +11,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 
 #[AsEntityListener(Events::postPersist, method: 'sendWelcomeEmail', entity: User::class)]
-final class UserWelcomeListener
+final class UserWelcomeEmailListener
 {
     public function __construct(
         private MailerInterface $mailer,
@@ -25,6 +25,7 @@ final class UserWelcomeListener
     public function sendWelcomeEmail(User $user): void
     {
         $email = (new TemplatedEmail())
+            ->from('habib@hotmail.fr')
             ->to(new Address($user->getEmail()))
             ->subject($this->mailSubject)
             ->htmlTemplate('emails/welcome.html.twig')

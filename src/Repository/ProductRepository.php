@@ -19,6 +19,17 @@ class ProductRepository extends ServiceEntityRepository
     //    /**
     //     * @return Product[] Returns an array of Product objects
     //     */
+    public function findLatestProducts(?int $limit): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC'); // ou par createdAt si tu ajoutes ce champ plus tard
+
+        if ($limit !== null && $limit !== 0) {
+            $queryBuilder->setMaxResults($limit);
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
     //    public function findByExampleField($value): array
     //    {
     //        return $this->createQueryBuilder('p')
