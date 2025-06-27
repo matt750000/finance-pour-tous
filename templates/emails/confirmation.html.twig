@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Confirmation
+{% endblock %}
+
+{% block body %}
+	<h2>Merci pour votre commande,
+		{{ user.firstname }}
+		👋</h2>
+
+	<p>📦 Commande passée le
+		{{ order.createdAt|date('d/m/Y à H:i') }}.</p>
+
+	<p>
+		<strong>Adresse de livraison :</strong><br>
+		{{ order.name }}<br>
+		{{ order.address }},
+		{{ order.postalCode }}
+		{{ order.city }}<br>
+		📞
+		{{ order.phone }}
+	</p>
+
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Produit</th>
+				<th>Quantité</th>
+				<th>Prix</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in order.orderItems %}
+				<tr>
+					<td>{{ item.product.name }}</td>
+					<td>{{ item.quantity }}</td>
+					<td>{{ item.product.price|number_format(2, ',', ' ') }}
+						€</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<p>
+		<strong>Total :
+			{{ order.totalPrice|number_format(2, ',', ' ') }}
+			€</strong>
+	</p>
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -22,6 +23,68 @@ class Order
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Name is required.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Name cannot exceed {{ limit }} characters."
+    )]
+    #[Assert\Regex(
+        pattern: '/^[\p{L} \'-]+$/u',
+        message: "Name can only contain letters, spaces, apostrophes or hyphens."
+    )]
+    private ?string $name = null;
+
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "Address is required.")]
+    #[Assert\Length(
+        max: 1000,
+        maxMessage: "Address cannot exceed {{ limit }} characters."
+    )]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: "City is required.")]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: "City cannot exceed {{ limit }} characters."
+    )]
+    #[Assert\Regex(
+        pattern: '/^[\p{L} \'-]+$/u',
+        message: "City can only contain letters, spaces, apostrophes or hyphens."
+    )]
+    private ?string $city = null;
+
+    #[ORM\Column(length: 10)]
+    #[Assert\NotBlank(message: "Postal code is required.")]
+    #[Assert\Length(
+        min: 5,
+        max: 5,
+        exactMessage: "Postal code must be exactly {{ limit }} digits."
+    )]
+    #[Assert\Regex(
+        pattern: '/^\d{5}$/',
+        message: "Postal code must be exactly 5 digits."
+    )]
+    private ?string $postalCode = null;
+
+    #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: "Phone number is required.")]
+    #[Assert\Regex(
+        pattern: '/^0[1-9](\d{2}){4}$/',
+        message: "Phone number must be in French format, e.g. 0601020304."
+    )]
+    private ?string $phone = null;
+
+    #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Payment method is required.")]
+    #[Assert\Choice(
+        choices: ['bank_transfer', 'credit_card', 'paypal'],
+        message: "Payment method must be one of: 'bank_transfer', 'credit_card', or 'paypal'."
+    )]
+    private ?string $paymentMethod = null;
+
 
     /**
      * @var Collection<int, OrderItem>
@@ -110,6 +173,72 @@ class Order
     {
         $this->user = $user;
 
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): static
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): static
+    {
+        $this->city = $city;
+        return $this;
+    }
+
+    public function getPostalCode(): ?string
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(string $postalCode): static
+    {
+        $this->postalCode = $postalCode;
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): static
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?string
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(string $paymentMethod): static
+    {
+        $this->paymentMethod = $paymentMethod;
         return $this;
     }
 }

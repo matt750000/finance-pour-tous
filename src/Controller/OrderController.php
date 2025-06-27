@@ -2,28 +2,42 @@
 
 namespace App\Controller;
 
-use App\Form\OrderTypeType;
+use App\Form\OrderType;
+use App\Service\OrderService;
+use App\Service\EmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 final class OrderController extends AbstractController
 {
     #[Route('/order', name: 'app_order')]
-    public function commander(Request $request, SessionInterface $session): Response
-    {
-        $form = $this->createForm(OrderTypeType::class);
+    public function commander(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        OrderService $orderService,
+        EmailService $emailService
+    ): Response {
+        // 🧾 Affichage du formulaire
+        $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);
 
+        // ✅ Soumission du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            // ici tu pourrais stocker la commande dans la base
+            $user = $this->getUser(); // utilisateur connecté
+            $formData = $form->getData(); // tableau avec name, address, etc.
 
+            // 🛒 Création de la commande avec les produits du panier
+            $order = $orderService->createOrder($formData, $user);
+
+            // 📬 Envoi d’un email de confirmation
+            $emailService->sendOrderConfirmation($user, $order);
+
+            // ✅ Affichage de la page de confirmation
             return $this->render('order/confirmation.html.twig', [
-                'donnees' => $data,
-                'panier' => $session->get('panier', []),
+                'order' => $order,
             ]);
         }
 
