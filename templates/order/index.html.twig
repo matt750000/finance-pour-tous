@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Order
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card shadow-sm">
+					<div class="card-header bg-primary text-white">
+						<h4 class="mb-0">Informations de livraison</h4>
+					</div>
+					<div class="card-body">
+
+						{{ form_start(form) }}
+
+						<div class="mb-3">
+							{{ form_label(form.nom, 'Nom complet', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(form.nom) }}
+						</div>
+
+						<div class="mb-3">
+							{{ form_label(form.adresse, 'Adresse complète', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.adresse, {'attr': {'class': 'form-control', 'rows': 3}}) }}
+							{{ form_errors(form.adresse) }}
+						</div>
+
+						<div class="mb-3">
+							{{ form_label(form.paiement, 'Méthode de paiement', {'label_attr': {'class': 'form-label'}}) }}
+							{{ form_widget(form.paiement, {'attr': {'class': 'form-select'}}) }}
+							{{ form_errors(form.paiement) }}
+						</div>
+
+						<div class="text-end">
+							<button type="submit" class="btn btn-success">Valider la commande</button>
+						</div>
+
+						{{ form_end(form) }}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

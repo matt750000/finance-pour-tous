@@ -1,55 +1,72 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" href="{{ path('app_home') }}">
-      <img src="{{ asset('uploads/logo.png') }}" alt="Logo"
-           width="40" height="40" style="object-fit: contain;" class="me-2 rounded-circle bg-white p-1">
-      <span class="site-name fw-bold">
-        <span style="color: #FFD700;">F</span>
-        <span style="color: #FF8C00;">i</span>
-        <span style="color: #FF69B4;">n</span>
-        <span style="color: #00FFFF;">a</span>
-        <span style="color: #90EE90;">n</span>
-        <span style="color: #F08080;">c</span>
-        <span style="color: #FFFFFF;">e</span>
-        <span>&nbsp;</span>
-        <span style="color: #FFD700;">P</span>
-        <span style="color: #FF8C00;">o</span>
-        <span style="color: #FF69B4;">u</span>
-        <span style="color: #00FFFF;">r</span>
-        <span>&nbsp;</span>
-        <span style="color: #90EE90;">T</span>
-        <span style="color: #F08080;">o</span>
-        <span style="color: #FFFFFF;">u</span>
-        <span style="color: #FFD700;">s</span>
-      </span>
-    </a>
+	<div class="container-fluid">
+		<a class="navbar-brand d-flex align-items-center" href="{{ path('app_home') }}">
+			<img src="{{ asset('uploads/financeLogo.jpg') }}" alt="Logo" width="50" height="50" style="object-fit: contain;" class="me-2 rounded-circle bg-white p-1">
+			<span class="site-name fw-bold">
+				<span style="color: #FFD700;">F</span>
+				<span style="color: #FF8C00;">i</span>
+				<span style="color: #FF69B4;">n</span>
+				<span style="color: #00FFFF;">a</span>
+				<span style="color: #90EE90;">n</span>
+				<span style="color: #F08080;">c</span>
+				<span style="color: #FFFFFF;">e</span>
+				<span>&nbsp;</span>
+				<span style="color: #FFD700;">P</span>
+				<span style="color: #FF8C00;">o</span>
+				<span style="color: #FF69B4;">u</span>
+				<span style="color: #00FFFF;">r</span>
+				<span>&nbsp;</span>
+				<span style="color: #90EE90;">T</span>
+				<span style="color: #F08080;">o</span>
+				<span style="color: #FFFFFF;">u</span>
+				<span style="color: #FFD700;">s</span>
+			</span>
+		</a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" 
-            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-    <div class="collapse navbar-collapse" id="navbarMain">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" href="{{ path('app_home') }}">Accueil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" href="{{ path('app_home') }}">Contact</a>
-        </li>
-      </ul>
+		<div class="collapse navbar-collapse" id="navbarMain">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" href="{{ path('app_home') }}">Accueil</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" href="{{ path('app_home') }}">Contact</a>
+				</li>
+			</ul>
 
-      <div class="d-flex align-items-center text-white">
-        {% if app.user %}
-          <span class="me-3">
-            Bonjour {{ app.user.firstName }} {{ app.user.lastName }} !
-          </span>
-          <a href="{{ path('app_logout') }}" class="btn btn-outline-light">Déconnexion</a>
-        {% else %}
-          <a href="{{ path('app_login') }}" class="btn btn-outline-light me-2">Connexion</a>
-          <a href="{{ path('app_register') }}" class="btn btn-light">Inscription</a>
-        {% endif %}
-      </div>
-    </div>
-  </div>
+			<div class="d-flex align-items-center text-white" style="gap: 1rem;">
+				{% set total = 0 %}
+				{% for qty in app.session.get('cart', []) %}
+					{% set total = total + qty %}
+				{% endfor %}
+
+				<a href="{{ path('view_cart') }}" class="btn btn-outline-light position-relative">
+					🛒 Panier
+					{% if total > 0 %}
+						<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+							{{ total }}
+							<span class="visually-hidden">produits dans le panier</span>
+						</span>
+					{% endif %}
+				</a>
+
+				{% if app.user %}
+					<span class="me-3">
+						Bonjour
+						{{ app.user.firstName }}
+						{{ app.user.lastName }}
+						!
+					</span>
+					<a href="{{ path('app_logout') }}" class="btn btn-outline-light">Déconnexion</a>
+				{% else %}
+					<a href="{{ path('app_login') }}" class="btn btn-outline-light me-2">Connexion</a>
+					<a href="{{ path('app_register') }}" class="btn btn-light">Inscription</a>
+				{% endif %}
+			</div>
+
+		</div>
+	</div>
 </nav>

@@ -56,7 +56,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire.')]
     private ?string $password = null;
 
     #[Assert\Length(
@@ -91,6 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->subscriptions = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

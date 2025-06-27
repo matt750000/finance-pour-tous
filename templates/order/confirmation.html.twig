@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Confirmation
+{% endblock %}
+
+{% block body %}
+	<h2 class="mb-4">Merci pour votre commande,
+		{{ donnees.nom }}
+		!</h2>
+
+	<div class="alert alert-info">
+		Veuillez effectuer un virement pour finaliser votre achat.
+	</div>
+
+	<h4 class="mt-4">🛒 Récapitulatif du panier</h4>
+
+	<table class="table table-striped table-bordered mt-3">
+		<thead class="table-primary">
+			<tr>
+				<th>Produit</th>
+				<th>Quantité</th>
+				<th>Prix unitaire</th>
+				<th>Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% set total = 0 %}
+			{% for item in panier %}
+				{% set sousTotal = item.quantite * item.produit.prix %}
+				{% set total = total + sousTotal %}
+				<tr>
+					<td>{{ item.produit.nom }}</td>
+					<td>{{ item.quantite }}</td>
+					<td>{{ item.produit.prix|number_format(2, ',', ' ') }}
+						€</td>
+					<td>{{ sousTotal|number_format(2, ',', ' ') }}
+						€</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr class="table-light">
+				<td colspan="3" class="text-end">
+					<strong>Total général</strong>
+				</td>
+				<td>
+					<strong>{{ total|number_format(2, ',', ' ') }}
+						€</strong>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+{% endblock %}
