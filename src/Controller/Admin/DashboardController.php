@@ -19,10 +19,16 @@ class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
-        
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        if (!in_array('ROLE_ADMIN', $user->getRoles())) {
+            return $this->redirectToRoute('app_home');
+        }
+
         return $this->render('admin/dashboard.html.twig');
     }
 
