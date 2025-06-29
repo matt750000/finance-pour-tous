@@ -17,11 +17,11 @@ class OrderItem
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'orderItems')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE',nullable: false)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     private ?Order $orderRef = null;
 
     #[ORM\ManyToOne(inversedBy: 'prodoctItems')]
-    #[ORM\JoinColumn(onDelete: 'CASCADE',nullable: false)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE', nullable: false)]
     private ?Product $product = null;
 
     public function getId(): ?int
@@ -63,5 +63,10 @@ class OrderItem
         $this->product = $product;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->product ? $this->product->getName() : 'Article';
     }
 }

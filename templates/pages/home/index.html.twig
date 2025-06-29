@@ -1,56 +1,67 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Mon Conseil Financier - Accueil
+{% block title %}Accueil
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-4">
-		<div class="jumbotron">
-			<h1 class="display-4">Bienvenue sur mon site, l'expert en Conseil Financier</h1>
-			<p class="lead">
-				Découvrez des ressources exclusives pour gérer votre argent, investir intelligemment et atteindre vos objectifs financiers.
-			</p>
+	<div class="container" mt-5" style=" max-width: 70%; margin: auto;">
+
+		<div class="text-center bg-light p-5 rounded shadow-sm" data-controller="fade" data-fade-delay-value="0">
+			<h1 class="display-4">Bienvenue</h1>
+			<p class="lead">Gérez vos finances avec clarté et sérénité.</p>
 			<hr class="my-4">
 			{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
 				<p>Pour commencer, créez un compte ou connectez-vous :</p>
-
-				<div class="d-flex gap-2">
+				<div class="d-flex justify-content-center gap-2">
 					<a class="btn btn-primary btn-lg" href="{{ path('app_register') }}" role="button">Inscription</a>
-					<a class="btn btn-outline-secondary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
+					<a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
 				</div>
 			{% endif %}
-
 		</div>
 
-		{# SECTION À PROPOS #}
-		<section class="mt-5">
-			<h2>À propos</h2>
-			<p>
-				Nous sommes spécialisés dans le conseil financier. Nous proposons des e-books, des formations, des modèles Excel et un abonnement premium pour accéder à du contenu exclusif.
-			</p>
+		<section class="mt-5" data-controller="fade" data-fade-delay-value="200">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<h2>Notre mission</h2>
+					<p>
+						Tout a commencé avec une simple feuille Excel et une question :
+						<em>“Pourquoi personne ne m’a jamais appris à gérer mon argent ?”</em><br>
+						De cette frustration est née une ambition : rendre les finances accessibles à tous.
+					</p>
+					<p>
+						Chez
+						<strong>Mon Conseil Financier</strong>, notre objectif est de rendre la gestion de vos finances
+																																																																																														            aussi simple que motivante. Découvrez nos ressources premium et gratuites.
+					</p>
+				</div>
+				<div class="col-md-6 text-center">
+					<img src="{{ asset('images/a-propos.jpg') }}" alt="Notre mission" class="img-fluid rounded shadow-sm" data-controller="fade" data-fade-delay-value="400">
+				</div>
+			</div>
 		</section>
 
-		{# SECTION PRODUITS #}
-		<section class="mt-5">
-			<h2>Nos Produits</h2>
 
+		<section class="mt-5" data-controller="fade" data-fade-delay-value="400">
+			<h2>Nos Produits</h2>
 			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3">
 				{% for product in products %}
-					<div class="col">
+					<div class="col-md-6 col-lg-4" data-controller="fade" data-fade-delay-value="{{ loop.index * 150 }}">
+
 						<div class="card h-100 shadow-sm">
 							{% if product.image %}
 								<img src="{{ asset('images/products/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}">
 							{% endif %}
 							<div class="card-body">
 								<h5 class="card-title">{{ product.name }}</h5>
-								<p class="card-text text-muted">
+								<p class="card-text small text-muted">
 									{{ product.description|default('Aucune description')|slice(0, 100) ~ '...' }}
 								</p>
+
 							</div>
 							<div class="card-footer d-flex justify-content-between align-items-center">
 								<span class="fw-bold">{{ product.price }}
 									€</span>
-								<a href="{{ path('app_login') }}" class="btn btn-sm btn-primary">Voir</a>
+								<a href="{{ path('app_products') }}" class="btn btn-sm btn-primary">Voir</a>
 							</div>
 						</div>
 					</div>
@@ -61,5 +72,6 @@
 				{% endfor %}
 			</div>
 		</section>
+
 	</div>
 {% endblock %}

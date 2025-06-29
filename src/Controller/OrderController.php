@@ -20,6 +20,10 @@ final class OrderController extends AbstractController
         OrderService $orderService,
         EmailService $emailService
     ): Response {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         // 🧾 Affichage du formulaire
         $form = $this->createForm(OrderType::class);
         $form->handleRequest($request);

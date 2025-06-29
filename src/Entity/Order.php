@@ -241,4 +241,9 @@ class Order
         $this->paymentMethod = $paymentMethod;
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return (string) $this->getName();
+    }
 }

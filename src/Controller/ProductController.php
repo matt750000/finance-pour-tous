@@ -17,6 +17,10 @@ final class ProductController extends AbstractController
     #[Route('/products', name: 'app_products', methods: ['GET'])]
     public function index(ProductRepository $productRepository, CategoryRepository $categoryRepository, PaginatorInterface  $paginator, Request $request): Response
     {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $search = $request->query->get('q');
         $categoryId = $request->query->get('category');
         $queryBuilder = $productRepository->createQueryBuilder('p')
@@ -54,6 +58,10 @@ final class ProductController extends AbstractController
     #[Route('/cart/add/{id}', name: 'add_to_cart')]
     public function add(Product $product, SessionInterface $session): Response
     {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $cart = $session->get('cart', []);
         $cart[$product->getId()] = ($cart[$product->getId()] ?? 0) + 1;
         $session->set('cart', $cart);
