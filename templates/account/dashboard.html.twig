@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Espace
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<h1 class="mb-4">Bonjour
+			{{ user.firstName }}</h1>
+
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">{{ message }}</div>
+		{% endfor %}
+
+		<div class="mb-4">
+			<h2 class="h5">Mes informations</h2>
+			<ul class="list-group">
+				<li class="list-group-item">Nom :
+					{{ user.lastName }}</li>
+				<li class="list-group-item">Email :
+					{{ user.email }}</li>
+			</ul>
+			<a href="{{ path('app_account_edit') }}" class="btn btn-outline-primary mt-3">
+				Modifier mes informations
+			</a>
+		</div>
+
+		<hr>
+
+		<h2 class="h5">Mes commandes</h2>
+		{% if user.orders|length > 0 %}
+			<ul class="list-group">
+				{% for order in user.orders %}
+					<li class="list-group-item">
+						#{{ order.id }}
+						—
+						{{ order.createdAt|date('d/m/Y') }}
+						—
+						{{  order.getTotalPrice()  }}
+						€
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p class="text-muted">Aucune commande trouvée.</p>
+		{% endif %}
+	</div>
+{% endblock %}
