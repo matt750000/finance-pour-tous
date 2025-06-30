@@ -40,12 +40,12 @@ final class OrderController extends AbstractController
             $emailService->sendOrderConfirmation($user, $order);
 
             // ✅ Affichage de la page de confirmation
-            return $this->render('order/confirmation.html.twig', [
+            return $this->render('pages/order/confirmation.html.twig', [
                 'order' => $order,
             ]);
         }
 
-        return $this->render('order/index.html.twig', [
+        return $this->render('pages/order/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }

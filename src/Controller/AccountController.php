@@ -23,7 +23,7 @@ final class AccountController extends AbstractController
 
         $user = $this->getUser();
 
-        return $this->render('account/dashboard.html.twig', [
+        return $this->render('pages/account/dashboard.html.twig', [
             'user' => $user,
         ]);
     }
@@ -57,7 +57,7 @@ final class AccountController extends AbstractController
             return $this->redirectToRoute('app_account');
         }
 
-        return $this->render('account/edit.html.twig', [
+        return $this->render('pages/account/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

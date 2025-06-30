@@ -39,6 +39,8 @@ class OrderService
             $orderItem->setProduct($item['product']);
             $orderItem->setQuantity($item['quantity']);
             $orderItem->setOrderRef($order);
+            $order->addOrderItem($orderItem);
+
 
             $this->em->persist($orderItem);
 

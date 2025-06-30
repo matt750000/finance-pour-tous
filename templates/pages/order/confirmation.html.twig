@@ -39,7 +39,9 @@
 				</tr>
 			</thead>
 			<tbody>
+
 				{% for item in order.orderItems %}
+					{{ dump(item) }}
 					{% set sousTotal = item.quantity * item.product.price %}
 					<tr>
 						<td>{{ item.product.name }}</td>
@@ -63,5 +65,10 @@
 				</tr>
 			</tfoot>
 		</table>
+		<div class="text-center mt-5">
+			<a href="{{ path('app_home') }}" class="btn btn-primary">
+				⬅️ Retour à l'accueil
+			</a>
+		</div>
 	</div>
 {% endblock %}

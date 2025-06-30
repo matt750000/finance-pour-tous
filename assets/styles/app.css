@@ -66,3 +66,34 @@ body {
     background-color: #fafafa;
     border-top: 1px solid #eee;
 }
+
+
+.list-group-item.active {
+    background-color: #E67E22;
+    border-color: #E67E22;
+    color: white;
+    font-weight: bold;
+}
+
+.hover-scale {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+
+.hover-scale:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.text-orange {
+    color: #E67E22;
+}
+
+aside .list-group-item {
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+aside .list-group-item:hover {
+  background-color: #f3f3f3;
+}
+
+
