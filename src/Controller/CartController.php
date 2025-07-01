@@ -13,6 +13,10 @@ class CartController extends AbstractController
     #[Route('/cart', name: 'view_cart')]
     public function index(CartService $cartService): Response
     {
+        if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $cartItems = $cartService->getDetailedCartItems();
         $total = $cartService->getTotal();
 

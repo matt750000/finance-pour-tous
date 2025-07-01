@@ -13,7 +13,7 @@ class AccountMailer
     public function sendProfileUpdatedEmail(User $user): void
     {
         $email = (new Email())
-            ->from('noreply@votresite.com')
+            ->from('commande@tonsite.fr')
             ->to($user->getEmail())
             ->subject('Modification de votre profil')
             ->text('Bonjour ' . $user->getFirstName() . ', votre profil a été mis à jour.');
