@@ -33,7 +33,10 @@
 					<a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" href="{{ path('app_contact') }}">Nous contacter</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" href="{{ path('app_account') }}">Service Client</a>
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" href="{{ path('app_account') }}">Espace Client</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {% if app.request.attributes.get('_route') == 'app_home' %}active{% endif %}" href="{{ path('app_list_actions') }}">Nos graphiques d’actions</a>
 				</li>
 			</ul>
 

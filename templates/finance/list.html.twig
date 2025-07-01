@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Actions et Cryptos
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row justify-content-center">
+			<div
+				class="col-12 col-md-8">
+				{# 8/12 = 66.6% proche de 70% #}
+				<h1>Liste des Actions et Cryptos</h1>
+
+				<table class="table table-striped">
+					<tbody>
+						{% for action in actions %}
+							<tr>
+								<td>{{ action.symbol }}</td>
+								<td>{{ action.label }}</td>
+								<td>
+									<a href="{{ path('action_chart', {'symbol': action.symbol}) }}" class="btn btn-primary btn-sm">Voir le graphique</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				<div class="mt-4 text-start">
+					<a href="{{ path('app_products') }}" class="btn btn-primary">
+						← Retour à la liste des produits
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

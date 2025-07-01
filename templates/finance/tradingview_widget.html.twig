@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Analyse financeiére !
+{% endblock %}
+
+{% block body %}
+	<div class="container my-5">
+		<div class="card shadow-sm">
+			<div class="card-header bg-light">
+				<h5 class="mb-0">Graphique de l’action
+					{{ symbol }}</h5>
+			</div>
+			<div class="card-body">
+				<div class="tradingview-widget-container">
+					<div id="tradingview_chart"></div>
+					<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+					<script type="text/javascript">
+						new TradingView.widget({
+"width": "100%",
+"height": 500,
+"symbol": "{{ symbol }}",
+"interval": "D",
+"timezone": "Europe/Paris",
+"theme": "light",
+"style": "1",
+"locale": "fr",
+"toolbar_bg": "#f1f3f6",
+"enable_publishing": false,
+"hide_top_toolbar": false,
+"container_id": "tradingview_chart"
+});
+					</script>
+				</div>
+			</div>
+		</div>
+
+		{% if price is not null %}
+			<div class="card w-75 mx-auto mt-4 shadow-sm">
+				<div class="card-header bg-primary text-white">
+					<h5 class="mb-0">Détails du prix pour
+						{{ symbol }}</h5>
+				</div>
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						Prix actuel
+						<span class="badge bg-primary rounded-pill">{{ price }}
+							€</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						Ouverture
+						<span class="badge bg-secondary rounded-pill">{{ open }}
+							€</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						Plus haut
+						<span class="badge bg-success rounded-pill">{{ high }}
+							€</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						Plus bas
+						<span class="badge bg-danger rounded-pill">{{ low }}
+							€</span>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-center">
+						Clôture précédente
+						<span class="badge bg-info rounded-pill">{{ previousClose }}
+							€</span>
+					</li>
+				</ul>
+			</div>
+		{% endif %}
+
+		<div class="mt-4 text-center">
+			<a href="{{ path('app_list_actions') }}" class="btn btn-primary">
+				← Retour à la liste des actions
+			</a>
+		</div>
+	</div>
+{% endblock %}
